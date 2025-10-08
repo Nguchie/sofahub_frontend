@@ -19,6 +19,14 @@ export const metadata: Metadata = {
   generator: "v0.app",
   keywords: "furniture, Kenya, Nairobi, M-Pesa, home decor, living room, bedroom, dining room, office furniture",
   authors: [{ name: "SofaHub" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/sofahub-logo.png", type: "image/png" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "SofaHub - Quality Furniture in Kenya",
     description: "Discover premium furniture for your home with secure M-Pesa payments and free delivery.",
