@@ -342,7 +342,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-3 w-3 text-green-500" />
-                      Standard delivery: 3-5 business days
+                      Standard delivery: 1-5 business days
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-3 w-3 text-green-500" />

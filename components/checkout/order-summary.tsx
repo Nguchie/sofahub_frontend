@@ -95,7 +95,7 @@ export function OrderSummary({ cart }: OrderSummaryProps) {
           </div>
           <div className="text-xs text-amber-700 space-y-1">
             <div>• Orders above KSh 50,000 within Nairobi: <span className="font-medium text-green-600">FREE delivery</span></div>
-            <div>• Other locations: KSh 0 - 10,000 (paid on delivery)</div>
+            <div>• Other locations: Will not exceed KSh 10,000 for deliveries within Kenya (paid on delivery)</div>
             <div>• Delivery fee depends on location and product size</div>
             <div className="font-medium text-blue-600 mt-2">Delivery fees are NOT included in online payment</div>
           </div>

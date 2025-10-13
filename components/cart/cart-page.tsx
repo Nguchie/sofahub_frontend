@@ -100,7 +100,7 @@ export function CartPage() {
                     Free delivery within Nairobi for orders above KSh 50,000
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Standard delivery: 3-5 business days • Express delivery: 1-2 business days
+                    Standard delivery: 1-5 business days • Express delivery: 1-2 business days
                   </p>
                 </div>
               </div>

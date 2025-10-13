@@ -46,7 +46,7 @@ export default function DeliveryPage() {
                 <ul className="text-sm text-blue-800 space-y-2">
                   <li className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 mt-0.5 text-blue-600" />
-                    <span><strong>Nairobi:</strong> 3-5 business days</span>
+                    <span><strong>Nairobi:</strong> 1-5 business days</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 mt-0.5 text-blue-600" />
@@ -118,7 +118,7 @@ export default function DeliveryPage() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-900 mb-2">Maximum Delivery Fee</h4>
                 <p className="text-sm text-blue-800">
-                  <strong>Delivery fees will NOT exceed KSh 10,000</strong> regardless of location or product size.
+                  <strong>Delivery fees will NOT exceed KSh 10,000 for deliveries within Kenya</strong> regardless of location or product size.
                 </p>
               </div>
             </CardContent>
@@ -185,7 +185,7 @@ export default function DeliveryPage() {
             <CardContent className="space-y-3">
               <div className="flex items-center gap-2">
                 <Badge variant="secondary">Nairobi</Badge>
-                <span className="text-sm">3-5 days</span>
+                <span className="text-sm">1-5 days</span>
               </div>
               <div className="flex items-center gap-2">
                 <Badge variant="secondary">Other Areas</Badge>

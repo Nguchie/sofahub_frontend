@@ -146,9 +146,9 @@ export function ShippingForm({ initialData, onSubmit, onBack }: ShippingFormProp
         <h4 className="font-medium text-amber-900 mb-2">Delivery Information</h4>
         <ul className="text-sm text-amber-800 space-y-1">
           <li>• <span className="font-medium text-green-600">FREE delivery</span> within Nairobi for orders above KSh 50,000</li>
-          <li>• Other locations: KSh 0 - 10,000 (charged upon delivery)</li>
+          <li>• Other locations: Will not exceed KSh 10,000 for deliveries within Kenya (charged upon delivery)</li>
           <li>• Delivery fee depends on location and product size</li>
-          <li>• Standard delivery: 3-5 business days</li>
+          <li>• Standard delivery: 1-5 business days</li>
           <li>• Assembly service available upon request</li>
         </ul>
         <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700">

@@ -117,7 +117,7 @@ export default function ContactPage() {
             <CardContent className="p-6">
               <h3 className="font-semibold mb-2">How long does delivery take?</h3>
               <p className="text-sm text-muted-foreground">
-                Standard delivery takes 3-5 business days within Nairobi and 5-7 days for other counties. Express
+                Standard delivery takes 1-5 business days within Nairobi and 5-7 days for other counties. Express
                 delivery is available for urgent orders.
               </p>
             </CardContent>
