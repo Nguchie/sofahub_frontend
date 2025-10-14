@@ -45,7 +45,7 @@ export function ProductFilters({
       try {
         const [tagsData, typesData] = await Promise.all([
           tagApi.getAll(),
-          productTypeApi.getAll()
+          productTypeApi.getAll(category ? { room_category: category } : undefined)
         ])
         setAvailableTags(tagsData)
         setAvailableProductTypes(typesData)
@@ -56,7 +56,7 @@ export function ProductFilters({
       }
     }
     fetchFilterData()
-  }, [])
+  }, [category])
 
   const handleTagToggle = (tagSlug: string) => {
     const newTags = selectedTags.includes(tagSlug)
