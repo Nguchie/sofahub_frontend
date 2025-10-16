@@ -66,7 +66,18 @@ export const productApi = {
     if (params?.ordering) searchParams.set("ordering", params.ordering)
 
     const query = searchParams.toString()
-    const raw = await apiRequest<any[]>(`/products/${query ? `?${query}` : ""}`)
+    const url = `/products/${query ? `?${query}` : ""}`
+    
+    // Debug logging to see what we're sending to the backend
+    console.log('🔍 Fetching products with params:', params)
+    console.log('🌐 API URL:', `${API_BASE_URL}${url}`)
+    
+    const raw = await apiRequest<any[]>(url)
+    console.log('📦 Received products count:', raw.length)
+    if (raw.length > 0) {
+      console.log('📄 Sample product room_categories:', raw[0]?.room_categories)
+    }
+    
     return raw.map(transformProduct)
   },
 
@@ -79,7 +90,11 @@ export const productApi = {
 // Category API functions
 export const categoryApi = {
   // Backend exposes room categories at /api/products/room-categories/
-  getAll: () => apiRequest<Category[]>("/products/room-categories/"),
+  getAll: async () => {
+    const categories = await apiRequest<Category[]>("/products/room-categories/")
+    console.log('🏠 Room categories from backend:', categories)
+    return categories
+  },
 }
 
 export const blogApi = {
