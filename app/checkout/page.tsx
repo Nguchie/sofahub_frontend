@@ -10,6 +10,6 @@ export default function Checkout() {
 }
 
 export const metadata = {
-  title: "Checkout - FurniStore",
+  title: "Checkout - Sofahub",
   description: "Complete your furniture purchase with secure M-Pesa payment",
 }

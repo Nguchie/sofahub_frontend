@@ -230,8 +230,8 @@ export function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
             +254 700 123 456
           </a>{" "}
           or{" "}
-          <a href="mailto:orders@furnistore.co.ke" className="text-primary hover:underline">
-            orders@furnistore.co.ke
+          <a href="mailto:sofahub68@gmail.com" className="text-primary hover:underline">
+            orders@sofahub.co.ke
           </a>
         </p>
 

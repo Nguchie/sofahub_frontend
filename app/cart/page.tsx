@@ -9,6 +9,6 @@ export default function Cart() {
 }
 
 export const metadata = {
-  title: "Shopping Cart - FurniStore",
+  title: "Shopping Cart - Sofahub",
   description: "Review your selected furniture items before checkout",
 }

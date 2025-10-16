@@ -32,9 +32,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     const product = await productApi.getBySlug(params.slug)
 
     return {
-      title: `${product.name} - FurniStore`,
+      title: `${product.name} - Sofahub`,
       description:
-        product.description || `Buy ${product.name} at FurniStore. Quality furniture with M-Pesa payment options.`,
+        product.description || `Buy ${product.name} at Sofahub. Quality furniture with M-Pesa payment options.`,
       openGraph: {
         title: product.name,
         description: product.description,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     }
   } catch (error) {
     return {
-      title: "Product Not Found - FurniStore",
+      title: "Product Not Found - Sofahub",
     }
   }
 }
