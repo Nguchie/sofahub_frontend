@@ -184,7 +184,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               </div>
               <p className="text-sm text-muted-foreground flex items-center gap-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
-                Price excludes VAT. Free delivery within Nairobi for orders above KSh 50,000.
+                Free delivery within Nairobi for orders above KSh 50,000.
               </p>
             </div>
 
