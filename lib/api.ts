@@ -55,8 +55,8 @@ export const productApi = {
     ordering?: string;
   }) => {
     const searchParams = new URLSearchParams()
-    // Backend expects `room` (slug) for room filter
-    if (params?.category) searchParams.set("room", params.category)
+    // Backend expects `room_category` (slug) for room filter
+    if (params?.category) searchParams.set("room_category", params.category)
     if (params?.search) searchParams.set("search", params.search)
     if (params?.tags) searchParams.set("tags", params.tags)
     if (params?.product_type) searchParams.set("product_type", params.product_type)
@@ -66,18 +66,7 @@ export const productApi = {
     if (params?.ordering) searchParams.set("ordering", params.ordering)
 
     const query = searchParams.toString()
-    const url = `/products/${query ? `?${query}` : ""}`
-    
-    // Debug logging to see what we're sending to the backend
-    console.log('🔍 Fetching products with params:', params)
-    console.log('🌐 API URL:', `${API_BASE_URL}${url}`)
-    
-    const raw = await apiRequest<any[]>(url)
-    console.log('📦 Received products count:', raw.length)
-    if (raw.length > 0) {
-      console.log('📄 Sample product room_categories:', raw[0]?.room_categories)
-    }
-    
+    const raw = await apiRequest<any[]>(`/products/${query ? `?${query}` : ""}`)
     return raw.map(transformProduct)
   },
 
@@ -90,11 +79,7 @@ export const productApi = {
 // Category API functions
 export const categoryApi = {
   // Backend exposes room categories at /api/products/room-categories/
-  getAll: async () => {
-    const categories = await apiRequest<Category[]>("/products/room-categories/")
-    console.log('🏠 Room categories from backend:', categories)
-    return categories
-  },
+  getAll: () => apiRequest<Category[]>("/products/room-categories/"),
 }
 
 export const blogApi = {
