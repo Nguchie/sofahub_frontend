@@ -102,11 +102,12 @@ export const blogApi = {
 // Product Type API functions
 export const productTypeApi = {
   getAll: (params?: { room_category?: string }) => {
-    const searchParams = new URLSearchParams()
-    if (params?.room_category) searchParams.set("room_category", params.room_category)
-    
-    const query = searchParams.toString()
-    return apiRequest<any[]>(`/products/product-types/${query ? `?${query}` : ""}`)
+    // If room_category is provided, use the room-specific endpoint
+    if (params?.room_category) {
+      return apiRequest<any[]>(`/products/product-types/room/${params.room_category}/`)
+    }
+    // Otherwise, get all product types
+    return apiRequest<any[]>(`/products/product-types/`)
   },
 }
 
