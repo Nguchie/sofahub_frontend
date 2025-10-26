@@ -1,11 +1,11 @@
 export function formatPrice(price: string | number): string {
   const numPrice = typeof price === "string" ? Number.parseFloat(price) : price
-  return new Intl.NumberFormat("en-KE", {
-    style: "currency",
-    currency: "KES",
+  // Use KSh instead of KES for consistent branding
+  const formatted = new Intl.NumberFormat("en-KE", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(numPrice)
+  return `KSh ${formatted}`
 }
 
 export function formatPhoneNumber(phone: string): string {
