@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Expand } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import type { ProductImage } from "@/lib/types"
+import Image from "next/image"
 
 interface ProductImageGalleryProps {
   images: (ProductImage | { image: string; alt_text: string })[]
@@ -31,10 +32,13 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
     <div className="space-y-4">
       {/* Main Image */}
       <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
-        <img
+        <Image
           src={currentImage?.image || "/placeholder.svg"}
           alt={currentImage?.alt_text || productName}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+          priority={false}
+          className="object-cover"
         />
 
         {/* Navigation arrows */}
@@ -72,10 +76,12 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
           </DialogTrigger>
           <DialogContent className="max-w-4xl">
             <div className="relative aspect-square">
-              <img
+              <Image
                 src={currentImage?.image || "/placeholder.svg"}
                 alt={currentImage?.alt_text || productName}
-                className="w-full h-full object-contain"
+                fill
+                sizes="90vw"
+                className="object-contain"
               />
             </div>
           </DialogContent>
@@ -100,11 +106,16 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               }`}
               onClick={() => setCurrentImageIndex(index)}
             >
-              <img
-                src={image?.image || "/placeholder.svg"}
-                alt={image?.alt_text || `${productName} view ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={image?.image || "/placeholder.svg"}
+                  alt={image?.alt_text || `${productName} view ${index + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 25vw, 120px"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
             </button>
           ))}
         </div>

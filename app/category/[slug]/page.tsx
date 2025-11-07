@@ -1,6 +1,7 @@
 import { ProductCatalog } from "@/components/products/product-catalog"
 import { categoryApi } from "@/lib/api"
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
 
 interface CategoryPageProps {
   params: {
@@ -83,5 +84,24 @@ export async function generateStaticParams() {
       { slug: 'office' },
       { slug: 'fabrics-accessories' },
     ]
+  }
+}
+
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const slug = params.slug
+  const categories = await categoryApi.getAll().catch(() => [])
+  const category = Array.isArray(categories) ? categories.find((c) => c.slug === slug) : undefined
+  const name = category?.name || slug.replace(/-/g, ' ')
+
+  return {
+    title: `${name} - Sofahub`,
+    description: `Browse ${name} furniture from SofaHub Kenya.`,
+    alternates: { canonical: `/category/${slug}` },
+    robots: { index: true, follow: true },
+    openGraph: {
+      title: `${name} - Sofahub`,
+      description: `Browse ${name} furniture from SofaHub Kenya.`,
+      url: `/category/${slug}`,
+    },
   }
 }

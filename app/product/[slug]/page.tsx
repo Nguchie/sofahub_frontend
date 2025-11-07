@@ -35,15 +35,21 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       title: `${product.name} - Sofahub`,
       description:
         product.description || `Buy ${product.name} at Sofahub. Quality furniture with M-Pesa payment options.`,
+      alternates: {
+        canonical: `/product/${params.slug}`,
+      },
       openGraph: {
         title: product.name,
         description: product.description,
+        url: `/product/${params.slug}`,
         images: product.primary_image?.image ? [product.primary_image.image] : [],
       },
+      robots: { index: true, follow: true },
     }
   } catch (error) {
     return {
       title: "Product Not Found - Sofahub",
+      robots: { index: false, follow: false },
     }
   }
 }

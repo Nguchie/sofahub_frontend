@@ -10,6 +10,7 @@ import type { Product } from "@/lib/types"
 import { productApi } from "@/lib/api"
 import { formatPrice } from "@/lib/currency"
 import { useCart } from "@/lib/cart-context"
+import Image from "next/image"
 
 export function FeaturedProducts() {
   const [products, setProducts] = useState<Product[]>([])
@@ -73,14 +74,13 @@ export function FeaturedProducts() {
               {/* Product Image */}
               <div className="relative aspect-square bg-muted">
                 <Link href={`/product/${product.slug}`}>
-                  <img
+                  <Image
                     src={product.primary_image?.image || "/placeholder.svg"}
                     alt={product.primary_image?.alt_text || product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.svg";
-                    }}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority={false}
                   />
                 </Link>
 

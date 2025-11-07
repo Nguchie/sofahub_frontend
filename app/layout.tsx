@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sofahub.co.ke'),
   title: "SofaHub - Quality Furniture in Kenya",
   description:
     "Discover premium furniture for your home. Living room, bedroom, dining, and office furniture with M-Pesa payment options.",
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
     description: "Discover premium furniture for your home with secure M-Pesa payments and free delivery.",
     type: "website",
     locale: "en_KE",
+    url: 'https://sofahub.co.ke/',
   },
 }
 
@@ -58,7 +60,7 @@ export default function RootLayout({
         {/* Tawk.to Chatbot Script */}
         <Script
           id="tawk-to"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
