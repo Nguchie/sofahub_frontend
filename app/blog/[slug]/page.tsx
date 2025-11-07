@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       openGraph: { url: `/blog/${params.slug}` },
     }
   } catch {
+    return {
       title: "Blog - Sofahub",
       alternates: { canonical: `/blog/${params.slug}` },
       robots: { index: true, follow: true },
