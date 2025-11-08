@@ -8,13 +8,44 @@ export const revalidate = 0
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://sofahub.co.ke'
 
-  // Static pages
+  // Static pages - Main category pages prioritized for sitelinks
   const staticPages = [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
+    },
+    // Main category pages - high priority for Google sitelinks
+    {
+      url: `${baseUrl}/category/living-room`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/category/dining-room`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/category/bedroom`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/category/office`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/category/fabrics-accessories`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/products`,
@@ -61,15 +92,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
     // Fetch all categories from the database
+    // Filter out main categories that are already in staticPages to avoid duplicates
+    const mainCategorySlugs = ['living-room', 'dining-room', 'bedroom', 'office', 'fabrics-accessories']
     const categories = await categoryApi.getAll()
     console.log(`Found ${categories.length} categories to add to sitemap`)
     
-    const categoryPages = categories.map(category => ({
-      url: `${baseUrl}/category/${category.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }))
+    const categoryPages = categories
+      .filter(category => !mainCategorySlugs.includes(category.slug))
+      .map(category => ({
+        url: `${baseUrl}/category/${category.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      }))
 
     // Fetch all blog posts
     const blogPosts = await blogApi.getAll()

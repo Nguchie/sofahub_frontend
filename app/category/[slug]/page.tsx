@@ -94,14 +94,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const name = category?.name || slug.replace(/-/g, ' ')
 
   return {
-    title: `${name} - Sofahub`,
-    description: `Browse ${name} furniture from SofaHub Kenya.`,
-    alternates: { canonical: `/category/${slug}` },
-    robots: { index: true, follow: true },
+    title: `${name} Furniture - Sofahub Kenya | Quality ${name} Furniture`,
+    description: `Browse our collection of ${name} furniture from SofaHub Kenya. Quality furniture with M-Pesa payment options and free Nairobi delivery.`,
+    alternates: { canonical: `https://sofahub.co.ke/category/${slug}` },
+    robots: { 
+      index: true, 
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
-      title: `${name} - Sofahub`,
-      description: `Browse ${name} furniture from SofaHub Kenya.`,
-      url: `/category/${slug}`,
+      title: `${name} Furniture - Sofahub`,
+      description: `Browse our collection of ${name} furniture from SofaHub Kenya.`,
+      url: `https://sofahub.co.ke/category/${slug}`,
+      type: "website",
     },
   }
 }

@@ -23,11 +23,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/sofahub-logo.png", type: "image/png" }
+      { url: "/sofahub-logo.png", type: "image/png", sizes: "512x512" }
     ],
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "SofaHub - Quality Furniture in Kenya",
     description: "Discover premium furniture for your home with secure M-Pesa payments and free delivery.",

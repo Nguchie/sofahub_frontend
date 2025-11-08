@@ -36,15 +36,22 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       description:
         product.description || `Buy ${product.name} at Sofahub. Quality furniture with M-Pesa payment options.`,
       alternates: {
-        canonical: `/product/${params.slug}`,
+        canonical: `https://sofahub.co.ke/product/${params.slug}`,
       },
       openGraph: {
         title: product.name,
         description: product.description,
-        url: `/product/${params.slug}`,
+        url: `https://sofahub.co.ke/product/${params.slug}`,
         images: product.primary_image?.image ? [product.primary_image.image] : [],
       },
-      robots: { index: true, follow: true },
+      robots: { 
+        index: true, 
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
     }
   } catch (error) {
     return {
