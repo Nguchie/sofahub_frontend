@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge"
 import { Heart, Eye } from "lucide-react"
 import type { Product } from "@/lib/types"
 import { formatPrice } from "@/lib/currency"
-import Image from "next/image"
 
 interface ProductGridProps {
   products: Product[]
@@ -52,13 +51,17 @@ export function ProductGrid({ products, loading }: ProductGridProps) {
             {/* Product Image */}
             <div className="relative aspect-square bg-muted">
               <Link href={`/product/${product.slug}`}>
-                <Image
-                  src={product.primary_image?.image || "/placeholder.svg"}
-                  alt={product.primary_image?.alt_text || product.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+                {product.primary_image?.image ? (
+                  <img
+                    src={product.primary_image.image}
+                    alt={product.primary_image.alt_text || product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
+                    No Image
+                  </div>
+                )}
               </Link>
 
               {/* Sale badge */}

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 
@@ -55,11 +56,13 @@ export function CategoryShowcase() {
         <Link href={`/category/${categories[0].slug}`} className="lg:col-span-2">
           <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
             <CardContent className="p-0 relative">
-              <div className="aspect-[2/1] lg:aspect-[2/1] bg-muted">
-                <img
+              <div className="aspect-[2/1] lg:aspect-[2/1] bg-muted relative">
+                <Image
                   src={categories[0].image || "/placeholder.svg"}
                   alt={categories[0].name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -80,11 +83,13 @@ export function CategoryShowcase() {
           <Link key={category.slug} href={`/category/${category.slug}`}>
             <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
               <CardContent className="p-0 relative">
-                <div className="aspect-square bg-muted">
-                  <img
+                <div className="aspect-square bg-muted relative">
+                  <Image
                     src={category.image || "/placeholder.svg"}
                     alt={category.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

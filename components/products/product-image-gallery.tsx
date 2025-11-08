@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight, Expand } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import type { ProductImage } from "@/lib/types"
-import Image from "next/image"
 
 interface ProductImageGalleryProps {
   images: (ProductImage | { image: string; alt_text: string })[]
@@ -15,34 +14,44 @@ interface ProductImageGalleryProps {
 export function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  // Ensure we have valid images array
-  const validImages = images && images.length > 0 ? images : [{ image: "/placeholder.svg", alt_text: productName }]
+  // Ensure we have valid images array and filter out invalid images
+  const validImages = images && images.length > 0 
+    ? images.filter(img => img?.image && img.image.trim() !== '')
+    : []
+  
+  const hasImages = validImages.length > 0
+  const currentImage = hasImages ? validImages[currentImageIndex] || validImages[0] : null
   
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % validImages.length)
+    if (hasImages) {
+      setCurrentImageIndex((prev) => (prev + 1) % validImages.length)
+    }
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + validImages.length) % validImages.length)
+    if (hasImages) {
+      setCurrentImageIndex((prev) => (prev - 1 + validImages.length) % validImages.length)
+    }
   }
-
-  const currentImage = validImages[currentImageIndex] || validImages[0]
 
   return (
     <div className="space-y-4">
       {/* Main Image */}
       <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
-        <Image
-          src={currentImage?.image || "/placeholder.svg"}
-          alt={currentImage?.alt_text || productName}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-          priority={false}
-          className="object-cover"
-        />
+        {currentImage?.image ? (
+          <img
+            src={currentImage.image}
+            alt={currentImage.alt_text || productName}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
+            No Image Available
+          </div>
+        )}
 
         {/* Navigation arrows */}
-        {validImages.length > 1 && (
+        {hasImages && validImages.length > 1 && (
           <>
             <Button
               variant="secondary"
@@ -64,31 +73,31 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
         )}
 
         {/* Expand button */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <Expand className="h-4 w-4" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-4xl">
-            <div className="relative aspect-square">
-              <Image
-                src={currentImage?.image || "/placeholder.svg"}
-                alt={currentImage?.alt_text || productName}
-                fill
-                sizes="90vw"
-                className="object-contain"
-              />
-            </div>
-          </DialogContent>
-        </Dialog>
+        {hasImages && currentImage?.image && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Expand className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl">
+              <div className="relative aspect-square">
+                <img
+                  src={currentImage.image}
+                  alt={currentImage.alt_text || productName}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
 
         {/* Image counter */}
-        {validImages.length > 1 && (
+        {hasImages && validImages.length > 1 && (
           <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
             {currentImageIndex + 1} / {validImages.length}
           </div>
@@ -96,27 +105,25 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
       </div>
 
       {/* Thumbnail Grid */}
-      {validImages.length > 1 && (
+      {hasImages && validImages.length > 1 && (
         <div className="grid grid-cols-4 gap-2">
           {validImages.map((image, index) => (
-            <button
-              key={index}
-              className={`aspect-square bg-muted rounded-md overflow-hidden border-2 transition-colors ${
-                index === currentImageIndex ? "border-primary" : "border-transparent hover:border-border"
-              }`}
-              onClick={() => setCurrentImageIndex(index)}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src={image?.image || "/placeholder.svg"}
-                  alt={image?.alt_text || `${productName} view ${index + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 25vw, 120px"
-                  className="object-cover"
+            image?.image ? (
+              <button
+                key={index}
+                className={`aspect-square bg-muted rounded-md overflow-hidden border-2 transition-colors ${
+                  index === currentImageIndex ? "border-primary" : "border-transparent hover:border-border"
+                }`}
+                onClick={() => setCurrentImageIndex(index)}
+              >
+                <img
+                  src={image.image}
+                  alt={image.alt_text || `${productName} view ${index + 1}`}
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
-              </div>
-            </button>
+              </button>
+            ) : null
           ))}
         </div>
       )}

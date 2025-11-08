@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
@@ -46,11 +47,14 @@ export function HeroSection() {
 
           {/* Hero Image */}
           <div className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-muted">
-              <img
+            <div className="aspect-square rounded-2xl overflow-hidden bg-muted relative">
+              <Image
                 src="/images/hero.jpg"
                 alt="Modern living room furniture setup"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                priority
               />
             </div>
             {/* Floating card */}

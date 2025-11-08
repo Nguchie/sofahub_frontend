@@ -105,11 +105,17 @@ export function RelatedProducts({ currentProductId, categories }: RelatedProduct
                 <CardContent className="p-0">
                   <div className="relative aspect-square bg-muted">
                     <Link href={`/product/${product.slug}`}>
-                      <img
-                        src={product.primary_image.image || "/placeholder.svg"}
-                        alt={product.primary_image.alt_text}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      {product.primary_image?.image ? (
+                        <img
+                          src={product.primary_image.image}
+                          alt={product.primary_image.alt_text || product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-xs">
+                          No Image
+                        </div>
+                      )}
                     </Link>
 
                     {product.is_on_sale && (
