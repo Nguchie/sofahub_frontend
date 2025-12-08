@@ -28,6 +28,19 @@ export async function generateMetadata({ params }: OrderConfirmationPageProps): 
   return {
     title: `Order Confirmation #${params.id} | Sofa Hub Kenya`,
     description: `Order confirmation and payment status for order #${params.id}`,
+    alternates: { canonical: `https://sofahub.co.ke/order-confirmation/${params.id}` },
+    robots: { 
+      index: false, 
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
+    openGraph: {
+      url: `https://sofahub.co.ke/order-confirmation/${params.id}`,
+      type: "website",
+    },
   }
 }
 

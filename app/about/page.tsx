@@ -233,4 +233,17 @@ export default function AboutPage() {
 export const metadata = {
   title: "About Us - SofaHub",
   description: "Learn about SofaHub's story, values, and commitment to quality furniture in Kenya",
+  alternates: { canonical: "https://sofahub.co.ke/about" },
+  robots: { 
+    index: true, 
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    url: "https://sofahub.co.ke/about",
+    type: "website",
+  },
 }

@@ -1,4 +1,5 @@
 import { ProductCatalog } from "@/components/products/product-catalog"
+import type { Metadata } from "next"
 
 interface SearchPageProps {
   searchParams: {
@@ -25,4 +26,22 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
       <ProductCatalog searchParams={{ ...searchParams, search: query }} />
     </div>
   )
+}
+
+export const metadata: Metadata = {
+  title: "Search Products - Sofahub",
+  description: "Search for furniture products at Sofahub Kenya",
+  alternates: { canonical: "https://sofahub.co.ke/search" },
+  robots: { 
+    index: false, 
+    follow: true,
+    googleBot: {
+      index: false,
+      follow: true,
+    },
+  },
+  openGraph: {
+    url: "https://sofahub.co.ke/search",
+    type: "website",
+  },
 }

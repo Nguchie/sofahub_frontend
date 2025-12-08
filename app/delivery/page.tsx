@@ -16,6 +16,19 @@ import {
 export const metadata: Metadata = {
   title: "Delivery Information | Sofa Hub Kenya",
   description: "Comprehensive delivery information, policies, and timelines for Sofa Hub Kenya furniture delivery services.",
+  alternates: { canonical: "https://sofahub.co.ke/delivery" },
+  robots: { 
+    index: true, 
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    url: "https://sofahub.co.ke/delivery",
+    type: "website",
+  },
 }
 
 export default function DeliveryPage() {

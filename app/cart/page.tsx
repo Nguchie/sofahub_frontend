@@ -11,4 +11,17 @@ export default function Cart() {
 export const metadata = {
   title: "Shopping Cart - Sofahub",
   description: "Review your selected furniture items before checkout",
+  alternates: { canonical: "https://sofahub.co.ke/cart" },
+  robots: { 
+    index: false, 
+    follow: true,
+    googleBot: {
+      index: false,
+      follow: true,
+    },
+  },
+  openGraph: {
+    url: "https://sofahub.co.ke/cart",
+    type: "website",
+  },
 }

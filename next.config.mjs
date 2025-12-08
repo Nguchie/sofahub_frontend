@@ -17,19 +17,6 @@ const nextConfig = {
       },
     ],
   },
-  // Redirect www to non-www
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          { type: 'host', value: 'www.sofahub.co.ke' },
-        ],
-        destination: 'https://sofahub.co.ke/:path*',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 export default nextConfig

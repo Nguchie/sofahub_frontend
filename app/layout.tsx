@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   generator: "v0.app",
   keywords: "furniture, Kenya, Nairobi, M-Pesa, home decor, living room, bedroom, dining room, office furniture",
   authors: [{ name: "SofaHub" }],
+  alternates: {
+    canonical: 'https://sofahub.co.ke/',
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -35,6 +38,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_KE",
     url: 'https://sofahub.co.ke/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 }
 

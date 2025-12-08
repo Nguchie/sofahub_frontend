@@ -181,4 +181,17 @@ export default function ContactPage() {
 export const metadata = {
   title: "Contact Us - SofaHub",
   description: "Get in touch with SofaHub for support, inquiries, or visit our showroom in Nairobi",
+  alternates: { canonical: "https://sofahub.co.ke/contact" },
+  robots: { 
+    index: true, 
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    url: "https://sofahub.co.ke/contact",
+    type: "website",
+  },
 }

@@ -27,11 +27,19 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
 export const metadata: Metadata = {
   title: "All Products - Sofahub",
   description: "Browse all furniture products available at Sofahub Kenya.",
-  alternates: { canonical: "/products" },
-  robots: { index: true, follow: true },
+  alternates: { canonical: "https://sofahub.co.ke/products" },
+  robots: { 
+    index: true, 
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "All Products - Sofahub",
     description: "Browse all furniture products available at Sofahub Kenya.",
-    url: "/products",
+    url: "https://sofahub.co.ke/products",
+    type: "website",
   },
 }

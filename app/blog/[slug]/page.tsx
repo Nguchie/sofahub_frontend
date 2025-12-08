@@ -18,15 +18,32 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return {
       title: `${post.title} - Sofahub Blog`,
       description: post.excerpt,
-      alternates: { canonical: `/blog/${params.slug}` },
-      robots: { index: true, follow: true },
-      openGraph: { url: `/blog/${params.slug}` },
+      alternates: { canonical: `https://sofahub.co.ke/blog/${params.slug}` },
+      robots: { 
+        index: true, 
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
+      openGraph: { 
+        url: `https://sofahub.co.ke/blog/${params.slug}`,
+        type: "article",
+      },
     }
   } catch {
     return {
       title: "Blog - Sofahub",
-      alternates: { canonical: `/blog/${params.slug}` },
-      robots: { index: true, follow: true },
+      alternates: { canonical: `https://sofahub.co.ke/blog/${params.slug}` },
+      robots: { 
+        index: true, 
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
     }
   }
 }

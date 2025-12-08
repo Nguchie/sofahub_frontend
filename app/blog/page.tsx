@@ -8,7 +8,17 @@ export default function BlogPage() {
 export const metadata: Metadata = {
   title: "Blog - Sofahub",
   description: "Latest tips and updates from Sofahub Kenya.",
-  alternates: { canonical: "/blog" },
-  robots: { index: true, follow: true },
-  openGraph: { url: "/blog" },
+  alternates: { canonical: "https://sofahub.co.ke/blog" },
+  robots: { 
+    index: true, 
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: { 
+    url: "https://sofahub.co.ke/blog",
+    type: "website",
+  },
 }

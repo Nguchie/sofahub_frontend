@@ -185,6 +185,22 @@ export const contactApi = {
   },
 }
 
+// Redirect API functions
+export const redirectApi = {
+  checkRedirect: async (path: string): Promise<{ new_path: string } | null> => {
+    try {
+      // Ensure path starts with /
+      const normalizedPath = path.startsWith('/') ? path : `/${path}`
+      return await apiRequest<{ new_path: string }>(`/redirects${normalizedPath}`)
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 404) {
+        return null // No redirect found
+      }
+      throw error
+    }
+  },
+}
+
 export { ApiError }
 
 // Map backend fields to frontend Product shape
