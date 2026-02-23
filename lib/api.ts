@@ -87,12 +87,16 @@ export const blogApi = {
   getAll: (params?: { search?: string; featured?: boolean; tags?: string; product?: string; category?: string }) => {
     const queryParams = params ? new URLSearchParams(params as any).toString() : ""
     const url = queryParams ? `/blog/posts/?${queryParams}` : "/blog/posts/"
-    return apiRequest<BlogPost[]>(url)
+    return apiRequest<BlogPost[]>(url, {
+      cache: "no-store",
+    })
   },
   
   // Get a single blog post by slug
   getBySlug: (slug: string) => 
-    apiRequest<BlogPost>(`/blog/posts/${slug}/`),
+    apiRequest<BlogPost>(`/blog/posts/${slug}/`, {
+      cache: "no-store",
+    }),
   
   // Get all blog tags
   getTags: () => 

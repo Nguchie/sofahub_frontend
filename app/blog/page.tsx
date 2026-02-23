@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { JsonLd, buildBreadcrumbSchema } from "@/components/seo/json-ld"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function BlogPage() {
   const posts = await blogApi.getAll().catch(() => [])
   const breadcrumbSchema = buildBreadcrumbSchema([

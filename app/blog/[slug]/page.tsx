@@ -9,6 +9,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { JsonLd, buildBreadcrumbSchema } from "@/components/seo/json-ld"
 import { formatPrice } from "@/lib/currency"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 interface BlogPostPageProps {
   params: {
     slug: string
