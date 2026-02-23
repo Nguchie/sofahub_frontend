@@ -3,29 +3,62 @@
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, Menu, X } from "lucide-react"
+import { Search, Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/lib/cart-context"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CartDrawer } from "@/components/cart/cart-drawer"
+import { productTypeApi } from "@/lib/api"
 
-const navigation = [
-  { name: "Living Room", href: "/category/living-room" },
-  { name: "Dining Room", href: "/category/dining-room" },
-  { name: "Bedroom", href: "/category/bedroom" },
-  { name: "Office", href: "/category/office" },
-  { name: "Fabrics & Accessories", href: "/category/fabrics-accessories" },
+const staticNavigation = [
   { name: "Blog", href: "/blog" },
   { name: "Delivery Info", href: "/delivery" },
   { name: "About Us", href: "/about" },
   { name: "Contact", href: "/contact" },
 ]
 
+const fallbackCategories = [
+  { name: "Living Room", slug: "living-room", subcategories: [] as { name: string; slug: string }[] },
+  { name: "Dining Room", slug: "dining-room", subcategories: [] as { name: string; slug: string }[] },
+  { name: "Bedroom", slug: "bedroom", subcategories: [] as { name: string; slug: string }[] },
+  { name: "Office", slug: "office", subcategories: [] as { name: string; slug: string }[] },
+  { name: "Fabrics & Accessories", slug: "fabrics-accessories", subcategories: [] as { name: string; slug: string }[] },
+]
+
 export function Header() {
   const { cart } = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null)
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
+  const [categoryNavigation, setCategoryNavigation] = useState(fallbackCategories)
+
+  useEffect(() => {
+    const loadCategoryNavigation = async () => {
+      try {
+        const navData = await Promise.all(
+          fallbackCategories.map(async (category) => {
+            const types = await productTypeApi.getAll({ room_category: category.slug }).catch(() => [])
+            return {
+              name: category.name,
+              slug: category.slug,
+              subcategories: Array.isArray(types)
+                ? types.map((type) => ({ name: type.name, slug: type.slug }))
+                : [],
+            }
+          }),
+        )
+        if (navData.length > 0) {
+          setCategoryNavigation(navData)
+        }
+      } catch (error) {
+        console.error("Failed to load navbar categories:", error)
+      }
+    }
+
+    loadCategoryNavigation()
+  }, [])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -103,12 +136,86 @@ export function Header() {
 
         {/* Navigation */}
         <nav className={`${isMenuOpen ? "block" : "hidden"} md:block border-t border-border md:border-t-0`}>
-          <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-0 md:gap-8 py-4 md:py-3">
-            {navigation.map((item) => (
+          <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-0 md:gap-5 py-4 md:py-3">
+            {categoryNavigation.map((item) => (
+              <li
+                key={item.slug}
+                className="relative"
+                onMouseEnter={() => {
+                  if (window.innerWidth >= 768 && item.subcategories.length > 0) {
+                    setOpenDesktopDropdown(item.slug)
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (window.innerWidth >= 768) setOpenDesktopDropdown(null)
+                }}
+              >
+                <div className="flex items-center md:gap-1">
+                  <Link
+                    href={`/category/${item.slug}`}
+                    className="block py-2 md:py-0 text-foreground hover:text-primary transition-colors font-medium whitespace-nowrap"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                  {item.subcategories.length > 0 && (
+                    <button
+                      type="button"
+                      className="p-1 text-muted-foreground hover:text-primary transition-colors"
+                      onClick={() => {
+                        if (window.innerWidth >= 768) {
+                          setOpenDesktopDropdown(item.slug)
+                        } else {
+                          setOpenMobileDropdown(openMobileDropdown === item.slug ? null : item.slug)
+                        }
+                      }}
+                      aria-label={`Toggle ${item.name} subcategories`}
+                    >
+                      <ChevronDown className={`h-4 w-4 transition-transform ${openDesktopDropdown === item.slug || openMobileDropdown === item.slug ? "rotate-180" : ""}`} />
+                    </button>
+                  )}
+                </div>
+
+                {item.subcategories.length > 0 && openDesktopDropdown === item.slug && (
+                  <div className="hidden md:block absolute top-full left-0 mt-0 min-w-[240px] rounded-md border bg-background shadow-lg p-2 z-50">
+                    {item.subcategories.map((sub) => (
+                      <Link
+                        key={sub.slug}
+                        href={`/category/${item.slug}/${sub.slug}`}
+                        className="block px-3 py-2 rounded hover:bg-muted text-sm"
+                        onClick={() => {
+                          setOpenDesktopDropdown(null)
+                          setIsMenuOpen(false)
+                        }}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {item.subcategories.length > 0 && openMobileDropdown === item.slug && (
+                  <div className="md:hidden pl-4 pb-2">
+                    {item.subcategories.map((sub) => (
+                      <Link
+                        key={sub.slug}
+                        href={`/category/${item.slug}/${sub.slug}`}
+                        className="block py-1 text-sm text-muted-foreground hover:text-primary"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+
+            {staticNavigation.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="block py-2 md:py-0 text-foreground hover:text-primary transition-colors font-medium"
+                  className="block py-2 md:py-0 text-foreground hover:text-primary transition-colors font-medium whitespace-nowrap"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}

@@ -42,7 +42,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
           <img
             src={currentImage.image}
             alt={currentImage.alt_text || productName}
-            className="w-full h-full object-cover"
+            className="object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">

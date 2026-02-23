@@ -15,11 +15,19 @@ export interface Product {
   } | null
   categories: Category[]
   tags: Tag[]
+  product_types?: ProductType[]
   images?: ProductImage[]
   variations?: ProductVariation[]
+  faqs?: ProductFaq[]
 }
 
 export interface Category {
+  id: number
+  name: string
+  slug: string
+}
+
+export interface ProductType {
   id: number
   name: string
   slug: string
@@ -29,7 +37,8 @@ export interface Tag {
   id: number
   name: string
   slug: string
-  color_code: string
+  color_code?: string
+  color?: string
 }
 
 export interface ProductImage {
@@ -45,6 +54,13 @@ export interface ProductVariation {
   attributes: Record<string, string>
   price: string
   stock_quantity: number
+}
+
+export interface ProductFaq {
+  id: number
+  question: string
+  answer: string
+  order: number
 }
 
 export interface CartItem {
@@ -114,6 +130,19 @@ export interface BlogPost {
   updated_at: string
   tags: Tag[]
   is_featured: boolean
+  related_products?: BlogRelatedProduct[]
+  related_categories?: Category[]
+}
+
+export interface BlogRelatedProduct {
+  id: number
+  name: string
+  slug: string
+  current_price: string
+  primary_image?: {
+    image: string
+    alt_text: string
+  } | null
 }
 
 export interface BlogListResponse {

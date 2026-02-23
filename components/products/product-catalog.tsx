@@ -11,29 +11,36 @@ import { productApi } from "@/lib/api"
 
 interface ProductCatalogProps {
   category?: string
+  productType?: string
   searchParams?: {
     search?: string
     tags?: string
+    product_type?: string
     sort?: string
     page?: string
   }
 }
 
-export function ProductCatalog({ category, searchParams = {} }: ProductCatalogProps) {
+export function ProductCatalog({ category, productType, searchParams = {} }: ProductCatalogProps) {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
   const [totalProducts, setTotalProducts] = useState(0)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [selectedProductType, setSelectedProductType] = useState<string | null>(null)
+  const [selectedProductType, setSelectedProductType] = useState<string | null>(productType || null)
   const [selectedPriceRange, setSelectedPriceRange] = useState<{ min: number; max: number } | null>(null)
 
-  const { search, tags, sort = "name", page = "1" } = searchParams
+  const { search, tags, product_type, sort = "name", page = "1" } = searchParams
 
   // Initialize filters from URL params
   useEffect(() => {
     if (tags) setSelectedTags(tags.split(","))
-  }, [tags])
+    if (productType) {
+      setSelectedProductType(productType)
+    } else if (product_type) {
+      setSelectedProductType(product_type)
+    }
+  }, [tags, productType, product_type])
 
   useEffect(() => {
     const fetchProducts = async () => {

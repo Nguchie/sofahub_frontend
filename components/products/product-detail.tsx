@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -100,9 +101,22 @@ export function ProductDetail({ product }: ProductDetailProps) {
       <div className="container mx-auto px-4 py-6">
         {/* Breadcrumbs */}
         <div className="mb-4 text-sm text-muted-foreground flex items-center gap-1">
-          <a href="/products" className="hover:text-primary transition-colors">Products</a>
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <ChevronRight className="h-4 w-4" />
-          <span>{product.categories?.[0]?.name || "All"}</span>
+          <Link href={`/category/${product.categories?.[0]?.slug || ""}`} className="hover:text-primary transition-colors">
+            {product.categories?.[0]?.name || "Category"}
+          </Link>
+          {product.product_types?.[0]?.slug && (
+            <>
+              <ChevronRight className="h-4 w-4" />
+              <Link
+                href={`/category/${product.categories?.[0]?.slug}/${product.product_types[0].slug}`}
+                className="hover:text-primary transition-colors"
+              >
+                {product.product_types[0].name}
+              </Link>
+            </>
+          )}
           <ChevronRight className="h-4 w-4" />
           <span className="text-foreground font-medium">{product.name}</span>
         </div>
@@ -382,9 +396,25 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </TabsContent>
           </Tabs>
         </div>
+
+        {product.faqs && product.faqs.length > 0 && (
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-3">
+              {product.faqs.map((faq) => (
+                <details key={faq.id} className="border rounded-lg p-4 group">
+                  <summary className="font-medium cursor-pointer list-none flex items-center justify-between">
+                    <span>{faq.question}</span>
+                    <span className="text-muted-foreground group-open:rotate-180 transition-transform">⌄</span>
+                  </summary>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )
 }
-
 

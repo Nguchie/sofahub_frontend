@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { productApi, categoryApi, blogApi } from '@/lib/api'
+import { productApi, categoryApi, blogApi, productTypeApi } from '@/lib/api'
 
 // Force dynamic rendering to fetch fresh data on each request
 export const dynamic = 'force-dynamic'
@@ -106,6 +106,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }))
 
+    // Sub-category pages based on room category + product type
+    const subCategoryPages = []
+    for (const category of categories) {
+      try {
+        const productTypes = await productTypeApi.getAll({ room_category: category.slug })
+        for (const type of productTypes) {
+          subCategoryPages.push({
+            url: `${baseUrl}/category/${category.slug}/${type.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.75,
+          })
+        }
+      } catch (error) {
+        console.error(`Error loading product types for ${category.slug}:`, error)
+      }
+    }
+
     // Fetch all blog posts
     const blogPosts = await blogApi.getAll()
     console.log(`Found ${blogPosts.length} blog posts to add to sitemap`)
@@ -122,6 +140,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...staticPages,
       ...productPages,
       ...categoryPages,
+      ...subCategoryPages,
       ...blogPages,
     ]
   } catch (error) {

@@ -7,6 +7,10 @@ export async function middleware(request: NextRequest) {
   
   // Remove port for comparison
   const hostnameWithoutPort = hostname.split(':')[0]
+  const isLocalhost =
+    hostnameWithoutPort === 'localhost' ||
+    hostnameWithoutPort === '127.0.0.1' ||
+    hostnameWithoutPort === '::1'
   const hasWww = hostnameWithoutPort.startsWith('www.')
   const isHttp = url.protocol === 'http:'
   
@@ -31,7 +35,7 @@ export async function middleware(request: NextRequest) {
   }
   
   // Check if we need to redirect for www/http/trailing slash
-  if (hasWww || isHttp || hasTrailingSlash) {
+  if (!isLocalhost && (hasWww || isHttp || hasTrailingSlash)) {
     // Build the correct URL with https, non-www, and no trailing slash
     const correctUrl = new URL(correctPathname + url.search, `https://${finalHostname}`)
     

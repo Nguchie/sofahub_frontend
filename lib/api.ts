@@ -84,7 +84,7 @@ export const categoryApi = {
 
 export const blogApi = {
   // Get all published blog posts
-  getAll: (params?: { search?: string; featured?: boolean; tags?: string }) => {
+  getAll: (params?: { search?: string; featured?: boolean; tags?: string; product?: string; category?: string }) => {
     const queryParams = params ? new URLSearchParams(params as any).toString() : ""
     const url = queryParams ? `/blog/posts/?${queryParams}` : "/blog/posts/"
     return apiRequest<BlogPost[]>(url)

@@ -2,6 +2,7 @@ import { ProductCatalog } from "@/components/products/product-catalog"
 import { categoryApi } from "@/lib/api"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
+import { JsonLd, buildBreadcrumbSchema } from "@/components/seo/json-ld"
 
 interface CategoryPageProps {
   params: {
@@ -19,13 +20,19 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   try {
     const categories = await categoryApi.getAll()
     const category = categories.find((cat) => cat.slug === params.slug)
-
     if (!category) {
       notFound()
     }
 
+    const breadcrumbSchema = buildBreadcrumbSchema([
+      { name: "Home", url: "https://sofahub.co.ke/" },
+      { name: "Categories", url: "https://sofahub.co.ke/products" },
+      { name: category.name, url: `https://sofahub.co.ke/category/${params.slug}` },
+    ])
+
     return (
       <div className="container mx-auto px-4 py-8">
+        <JsonLd data={breadcrumbSchema} />
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{category.name}</h1>
           <p className="text-lg text-muted-foreground">
