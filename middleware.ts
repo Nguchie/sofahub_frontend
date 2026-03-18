@@ -1,10 +1,24 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+function isEnabled(value: string | undefined) {
+  if (!value) {
+    return false
+  }
+
+  const normalizedValue = value.trim().toLowerCase()
+
+  if (['false', '0', 'no', 'off'].includes(normalizedValue)) {
+    return false
+  }
+
+  return ['true', '1', 'yes', 'on'].includes(normalizedValue)
+}
+
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const pathname = url.pathname
-  const siteDisabled = process.env.SITE_DISABLED === 'true'
+  const siteDisabled = isEnabled(process.env.SITE_DISABLED)
 
   if (siteDisabled) {
     const disabledResponse = new NextResponse(
