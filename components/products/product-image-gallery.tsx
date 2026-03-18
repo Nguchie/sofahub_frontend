@@ -37,12 +37,12 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-muted group">
         {currentImage?.image ? (
           <img
             src={currentImage.image}
             alt={currentImage.alt_text || productName}
-            className="object-cover"
+            className="h-full w-full object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
@@ -56,7 +56,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
             <Button
               variant="secondary"
               size="sm"
-              className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-2 top-1/2 z-10 h-9 w-9 -translate-y-1/2 rounded-full p-0 opacity-100 shadow-sm transition-opacity md:opacity-0 md:group-hover:opacity-100"
               onClick={prevImage}
             >
               <ChevronLeft className="h-4 w-4" />
@@ -64,7 +64,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
             <Button
               variant="secondary"
               size="sm"
-              className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute right-2 top-1/2 z-10 h-9 w-9 -translate-y-1/2 rounded-full p-0 opacity-100 shadow-sm transition-opacity md:opacity-0 md:group-hover:opacity-100"
               onClick={nextImage}
             >
               <ChevronRight className="h-4 w-4" />
@@ -79,7 +79,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               <Button
                 variant="secondary"
                 size="sm"
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-2 right-2 z-10 h-9 w-9 rounded-full p-0 opacity-100 shadow-sm transition-opacity md:opacity-0 md:group-hover:opacity-100"
               >
                 <Expand className="h-4 w-4" />
               </Button>
@@ -106,14 +106,14 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
 
       {/* Thumbnail Grid */}
       {hasImages && validImages.length > 1 && (
-        <div className="grid grid-cols-4 gap-2">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
           {validImages.map((image, index) => (
             image?.image ? (
               <button
                 key={index}
                 className={`aspect-square bg-muted rounded-md overflow-hidden border-2 transition-colors ${
                   index === currentImageIndex ? "border-primary" : "border-transparent hover:border-border"
-                }`}
+                } h-20 w-20 shrink-0 sm:h-24 sm:w-24`}
                 onClick={() => setCurrentImageIndex(index)}
               >
                 <img
